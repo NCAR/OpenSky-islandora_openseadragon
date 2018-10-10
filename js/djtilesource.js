@@ -18,11 +18,12 @@
     var that = this;
     var djatoka_get_params = {
       'url_ver': 'Z39.88-2004',
-      'rft_id': imageID,
+      'rft_id': imageID.replace('https','http'), /* kem */
       'svc_id': 'info:lanl-repo/svc/getMetadata'
     };
     this.baseURL = baseURL;
-    this.imageID = imageID;
+    this.imageID = imageID; 
+
     var djatoka_get_success = function(data, textStatus, jqXHR) {
       // Determine if the path to "imagefile" has backslashes in it.
       if (data.match(/\"imagefile\"\: \"[^\"]*?(\\).*\"/g)) {
@@ -33,6 +34,7 @@
           return capture1 + imagepath.replace(/\\/g, '\\\\') + capture3
         });
       }
+
       data = jQuery.parseJSON(data);
       $.TileSource.call(
 	that,
@@ -47,9 +49,13 @@
       // on the object, not through "prototype"...
       that.getTileUrl = $.DjatokaTileSource.prototype.getTileUrl;
     };
-    jQuery.ajaxSetup({async: false});
+
+    jQuery.ajaxSetup({async: false });
+
     jQuery.get(this.baseURL, djatoka_get_params, djatoka_get_success, 'text');
+
     jQuery.ajaxSetup({async:true});
+
   };
   jQuery.extend($.DjatokaTileSource.prototype, $.TileSource.prototype); // Inherit from TileSource.
   /**
@@ -81,7 +87,7 @@
     // Djatoka parameters
     var params = {
       'url_ver': 'Z39.88-2004',
-      'rft_id': this.imageID,
+      'rft_id': this.imageID.replace('https','http'), /* kem : fixed url bug */
       'svc_id': 'info:lanl-repo/svc/getRegion',
       'svc_val_fmt': 'info:ofi/fmt:kev:mtx:jpeg2000',
       'svc.region': region,

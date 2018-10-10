@@ -3,6 +3,7 @@
     attach: function(context, settings) {
       var resourceUri = settings.islandoraOpenSeadragon.resourceUri;
       var config = settings.islandoraOpenSeadragon.settings;
+
       $('#' + config['id']).each(function () {
         if (!$(this).hasClass('processed')) {
           config.tileSources = new Array();
@@ -63,12 +64,13 @@
             var scaled_box = new OpenSeadragon.Rect(parseInt(box.x/level), parseInt(box.y/level), parseInt(box.width/level), parseInt(box.height/level));
             var params = {
               'url_ver': 'Z39.88-2004',
-              'rft_id': source.imageID,
+              'rft_id': source.imageID, 
               'svc_id': 'info:lanl-repo/svc/getRegion',
               'svc_val_fmt': 'info:ofi/fmt:kev:mtx:jpeg2000',
               'svc.format': 'image/jpeg',
               'svc.region': scaled_box.y + ',' + scaled_box.x + ',' + (scaled_box.getBottomRight().y - scaled_box.y) + ',' + (scaled_box.getBottomRight().x - scaled_box.x),
             };
+            console.log(params);
             var dimensions = (zoom <= 1) ? source.dimensions.x + ',' + source.dimensions.y : container.x + ',' + container.y;
             jQuery("#clip").attr('href',  Drupal.settings.basePath + 'islandora/object/' + settings.islandoraOpenSeadragon.pid + '/print?' + jQuery.param({
               'clip': source.baseURL + '?' + jQuery.param(params),

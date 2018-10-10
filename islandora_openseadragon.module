@@ -35,11 +35,11 @@ function islandora_openseadragon_theme() {
       'template' => 'theme/islandora-openseadragon',
     ),
     // A link for clipping JP2 datastreams via djatoka.
-    'islandora_openseadragon_clipper' => array(
-      'variables' => array(
-        'pid' => NULL,
-      ),
-    ),
+//    'islandora_openseadragon_clipper' => array(
+//      'variables' => array(
+//        'pid' => NULL,
+//      ),
+//    ),
   );
 }
 
